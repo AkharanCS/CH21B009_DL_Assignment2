@@ -1,0 +1,4 @@
+__pycache__/
+inaturalist_12K/
+venv/
+wandb/

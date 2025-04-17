@@ -1,0 +1,21 @@
+method: bayes 
+
+metric:
+  name: val_loss  
+  goal: minimize  
+
+parameters:
+  n_filters:
+    values: [32,64,128]
+  filter_org:
+    values: ["same","double","halve"]
+  conv_activation_func:
+    values: ["ReLU", "GELU", "SiLU", "Mish"]
+  batch_normalization:
+    values: [True,False]
+  dropout:
+    values: [0.2,0.3]
+ 
+early_terminate:
+  type: hyperband  # Stops bad runs early
+  min_iter: 3  # Minimum iterations before stopping underperforming runs
