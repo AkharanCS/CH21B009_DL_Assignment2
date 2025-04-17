@@ -7,9 +7,13 @@ metric:
 parameters:
   n_filters:
     values: [32,64,128]
+  filter_size:
+    values: [3,5]
   filter_org:
-    values: ["same","double","halve"]
+    values: ["same"]
   conv_activation_func:
+    values: ["ReLU", "GELU", "SiLU", "Mish"]
+  dense_activation_func:
     values: ["ReLU", "GELU", "SiLU", "Mish"]
   batch_normalization:
     values: [True,False]

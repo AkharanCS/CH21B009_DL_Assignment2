@@ -17,12 +17,14 @@ def train():
     config = wandb.config
 
     n_filters = config.n_filters
+    filter_size = config.filter_size
     filter_org = config.filter_org
     conv_activation_fun = config.conv_activation_func
+    dense_activation_fun = config.dense_activation_func
     batch_normalization = config.batch_normalization
     dropout = config.dropout
     
-    wandb.run.name = f"n_filters_{n_filters}_forg_{filter_org}_conv_ac_{conv_activation_fun}_batch_{batch_normalization}_dropout_{dropout}"
+    wandb.run.name = f"n_filters{n_filters}_fsize_{filter_size}_conv_ac_{conv_activation_fun}_dense_ac_{dense_activation_fun}_batch_{batch_normalization}_dropout_{dropout}"
     wandb.run.save()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -37,8 +39,10 @@ def train():
     if filter_org == "halve":
         for i in range(4):
             filters.append(filters[i]/2) 
-    
-    model = CNN(filters=[8,16,32,64,128],kernel_sizes = [7,6,5,4,3],pool_sizes = [2,2,2,2,2],n_neurons=128,conv_activation = conv_activation_fun, dense_activation="ReLU", batch=batch_normalization, dropout = dropout).to(device)
+
+    kernel_sizes = [filter_size for _ in range(5)]
+    model = CNN(filters=filters,kernel_sizes = kernel_sizes,pool_sizes = [2,2,2,2,2],n_neurons=128,conv_activation = conv_activation_fun, 
+                dense_activation=dense_activation_fun, batch=batch_normalization, dropout = dropout).to(device)
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.001)
 
@@ -109,5 +113,5 @@ if __name__ == "__main__":
         sweep_config = yaml.safe_load(file)
 
     # Defining the wandb sweep
-    sweep_id = wandb.sweep(sweep_config, project="DL_Assignment2_Q2")
-    wandb.agent(sweep_id,function=train,count=5)
+    sweep_id = wandb.sweep(sweep_config, project="Assignment2_Q3")
+    wandb.agent(sweep_id,function=train,count=30)

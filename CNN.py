@@ -21,6 +21,12 @@ class CNN(nn.Module):
         
         if dense_activation == "ReLU":
             self.dense_activation = nn.ReLU()
+        if dense_activation == "GELU":
+            self.dense_activation = nn.GELU()
+        if dense_activation == "SiLU":
+            self.dense_activation = nn.SiLU()
+        if dense_activation == "Mish":
+            self.dense_activation = nn.Mish()
         
 
         layers1 = [nn.Conv2d(3, filters[0], kernel_sizes[0])]
