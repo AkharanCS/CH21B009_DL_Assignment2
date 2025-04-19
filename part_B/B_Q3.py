@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader,random_split
 import wandb
 import yaml
 
-
+# Defining the transform to match the input size of ImageNet
 transform = transforms.Compose([
         transforms.Resize((224, 224)),            # Resize all images to 224x224
         transforms.ToTensor(),                    # Convert images to PyTorch tensors
@@ -33,15 +33,14 @@ train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 val_loader = DataLoader(val_dataset,shuffle=False)
 test_loader = DataLoader(dataset_test)
 
-# Loading the pretrained model
-
+# Loading the pretrained ResNet50
 model = models.resnet50(pretrained=True)
 
 # Freezing early layers
 for param in model.parameters():
     param.requires_grad = False
 
-
+# Replacing the final layer with a layer of size 10
 num_classes = 10
 model.fc = nn.Linear(model.fc.in_features, num_classes)
 

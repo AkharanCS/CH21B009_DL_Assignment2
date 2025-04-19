@@ -7,13 +7,14 @@ from torch.utils.data import DataLoader,random_split
 import wandb
 import yaml
 
-from CNN import CNN
+from A_Q1 import CNN
 
 
 # Function which runs during the wandb sweep
 def train():
     wandb.init()
 
+    # Getting all the configurations
     config = wandb.config
 
     n_filters = config.n_filters
@@ -24,6 +25,7 @@ def train():
     batch_normalization = config.batch_normalization
     dropout = config.dropout
     
+    # Initializing wandb run
     wandb.run.name = f"n_filters{n_filters}_fsize_{filter_size}_conv_ac_{conv_activation_fun}_dense_ac_{dense_activation_fun}_batch_{batch_normalization}_dropout_{dropout}"
     wandb.run.save()
 
@@ -40,17 +42,19 @@ def train():
         for i in range(4):
             filters.append(filters[i]/2) 
 
+    # Initializing the model
     kernel_sizes = [filter_size for _ in range(5)]
     model = CNN(filters=filters,kernel_sizes = kernel_sizes,pool_sizes = [2,2,2,2,2],n_neurons=128,conv_activation = conv_activation_fun, 
                 dense_activation=dense_activation_fun, batch=batch_normalization, dropout = dropout).to(device)
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.001)
 
+    # Training the model
     epochs = 5
     epo = []
     val_accuracy = []
     val_loss = []
-    for epoch in range(epochs):  # change number of epochs as needed
+    for epoch in range(epochs):  
         running_loss = 0.0
         for images, labels in train_loader:
             images, labels = images.to(device), labels.to(device)
@@ -76,6 +80,7 @@ def train():
         val_loss.append(val_l)
         val_accuracy.append(val_a)
 
+    # Logging all the metrics to wandb
     for i in range(len(epo)):
         wandb.log({"epochs": epo[i], "val_loss": val_loss[i], "val_accuracy": val_accuracy[i]})
         
@@ -83,6 +88,8 @@ def train():
     wandb.log({"test_loss": test_l, "test_acc": test_a})
 
 if __name__ == "__main__":
+
+    # Defining the transform to imitate ImageNet dimensions.
     transform = transforms.Compose([
         transforms.Resize((224, 224)),            # Resize all images to 224x224
         transforms.ToTensor(),                    # Convert images to PyTorch tensors
@@ -108,8 +115,8 @@ if __name__ == "__main__":
     val_loader = DataLoader(val_dataset,shuffle=False)
     test_loader = DataLoader(dataset_test)
 
-
-    with open("config.yaml", "r") as file:
+    
+    with open("part_A/config.yaml", "r") as file:
         sweep_config = yaml.safe_load(file)
 
     # Defining the wandb sweep

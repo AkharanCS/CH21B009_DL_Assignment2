@@ -10,11 +10,13 @@ parameters:
   filter_size:
     values: [3,5]
   filter_org:
-    values: ["same"]
+    values: ["same","double","halve"]
   conv_activation_func:
     values: ["ReLU", "GELU", "SiLU", "Mish"]
   dense_activation_func:
     values: ["ReLU", "GELU", "SiLU", "Mish"]
+  dense_neurons:
+    values: [256,512]
   batch_normalization:
     values: [True,False]
   dropout:
