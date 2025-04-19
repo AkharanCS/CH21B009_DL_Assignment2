@@ -2,7 +2,7 @@
 
 ## Important Links
 - **Link to GitHub Repo** : <https://github.com/AkharanCS/CH21B009_DL_Assignment2>
-- **Link to wandb report** : <https://api.wandb.ai/links/ch21b009-indian-institute-of-technology-madras/gmq8fbz9>
+- **Link to wandb report** : <https://api.wandb.ai/links/ch21b009-indian-institute-of-technology-madras/66zm1dc9>
 
 ## Directories
 - **part_A**: contains all the codes and configurations required for Part-A of the assignment.
