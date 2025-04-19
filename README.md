@@ -14,13 +14,8 @@
 - **`A_Q4.py`**: contains code for running the best network configurations on inaturalist_12K as required in Part-A Q4.
 - **`config.yaml`**: contains the hyperparameter space used for running the wandb sweep in Part-A Q2.
 
-
 ## Files in part_B
 - **`B_Q3.py`**: contains code for fine-tuning ResNet50 for the inaturalist_12K dataset as required in Part-B Q3.
-- **`A_Q2.py`**: contains code for performing the wandb sweep required in Part-A Q2.
-- **`A_Q4.py`**: contains code for running the best network configurations on inaturalist_12K as required in Part-A Q4.
-- **`config.yaml`**: contains the hyperparameter space used for running the wandb sweep in Part-A Q2.
-All the other files import the above four files to do the required tasks.
 
 ## Other Important files
 - **`requirements.txt`**: contains all the libraries and dependancies required for running both part A and B.
