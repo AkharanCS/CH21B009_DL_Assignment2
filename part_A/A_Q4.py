@@ -72,7 +72,7 @@ for epoch in range(epochs):  # change number of epochs as needed
     
 
 # Initializing wandb
-wandb.init(project="Assignment2_Q5")
+wandb.init(project="Assignment2_Q4")
 
 test_l,test_a = model.get_loss_accuracy(test_loader,criterion)
 wandb.log({"test_loss": test_l, "test_acc": test_a})

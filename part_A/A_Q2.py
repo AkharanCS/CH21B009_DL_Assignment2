@@ -50,7 +50,7 @@ def train():
     optimizer = optim.Adam(model.parameters(), lr=0.001)
 
     # Training the model
-    epochs = 5
+    epochs = 10
     epo = []
     val_accuracy = []
     val_loss = []
@@ -115,7 +115,7 @@ if __name__ == "__main__":
     val_loader = DataLoader(val_dataset,shuffle=False)
     test_loader = DataLoader(dataset_test)
 
-    
+
     with open("part_A/config.yaml", "r") as file:
         sweep_config = yaml.safe_load(file)
 
